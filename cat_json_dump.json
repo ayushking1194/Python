@@ -1,0 +1,101 @@
+{
+    "api_version": "3.1",
+    "metadata": {
+        "kind": "category_key",
+        "offset": 0,
+        "length": 18,
+        "total_matches": 18
+    },
+    "entities": [
+        {
+            "name": "AppTier",
+            "description": "Application tier.",
+            "system_defined": true
+        },
+        {
+            "name": "AppType",
+            "description": "Application type.",
+            "system_defined": true
+        },
+        {
+            "name": "Environment",
+            "description": "Environment type.",
+            "system_defined": true
+        },
+        {
+            "name": "AnalyticsExclusions",
+            "description": "Category used to categorise the entities which are excluded from VMBL features",
+            "system_defined": true
+        },
+        {
+            "name": "TemplateType",
+            "description": "Template type",
+            "system_defined": true
+        },
+        {
+            "name": "Quarantine",
+            "description": "Quarantine Category",
+            "system_defined": true
+        },
+        {
+            "name": "VirtualNetworkType",
+            "description": "Virtual Network Type",
+            "system_defined": true
+        },
+        {
+            "name": "ADGroup",
+            "description": "Imported AD Groups",
+            "system_defined": true
+        },
+        {
+            "name": "CalmApplication",
+            "description": "Application created through CALM.",
+            "system_defined": true
+        },
+        {
+            "name": "CalmDeployment",
+            "description": "Deployment created through CALM.",
+            "system_defined": true
+        },
+        {
+            "name": "CalmService",
+            "description": "Service created through CALM.",
+            "system_defined": true
+        },
+        {
+            "name": "CalmPackage",
+            "description": "Package created through CALM.",
+            "system_defined": true
+        },
+        {
+            "name": "OSType",
+            "description": "OS Type of the VM.",
+            "system_defined": true
+        },
+        {
+            "name": "AppFamily",
+            "description": "Application family name.",
+            "system_defined": true
+        },
+        {
+            "name": "CalmUsername",
+            "description": "Username name.",
+            "system_defined": true
+        },
+        {
+            "name": "CalmProject",
+            "description": "Project name.",
+            "system_defined": true
+        },
+        {
+            "name": "CalmClusterUuid",
+            "description": "Clauster uuid.",
+            "system_defined": true
+        },
+        {
+            "name": "Storage",
+            "description": "Category for dictating storage properties on entities",
+            "system_defined": true
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "name": "AppTier",
+    "description": "Application tier.",
+    "system_defined": true,
+    "capabilities": {
+        "cardinality": null
+    }
+}
