@@ -1,3 +1,4 @@
+import getpass
 import requests
 import urllib3
 import uuid
@@ -15,28 +16,44 @@ DEFAULT_HEADERS = {
     "Accept": "application/json"
 }
 
-
-# -------------------------
-# GENERIC input function
-# -------------------------
-def ask(prompt, default=None):
-    value = input(f"{prompt} [{default}]: ").strip()
+# input function
+def ask(prompt, default=None, secret=False):
+    """
+    Generic input function.
+    - default: value to use if user presses Enter
+    - secret: if True, hides user input (for passwords)
+    """
+    if secret:
+        value = getpass.getpass(f"{prompt} [{default if default else ''}]: ").strip()
+    else:
+        value = input(f"{prompt} [{default if default else ''}]: ").strip()
     return value if value else default
 
+# authentication check
+def check_authentication():
+    """
+    Safely verify if the provided USERNAME and PASSWORD can authenticate with Prism Central.
+    Returns True if authentication succeeds, False otherwise. Does not raise exceptions.
+    """
+    try:
+        # Lightweight endpoint for auth check
+        resp = api_request("GET", "prism", "v4.0", "config")
+        if resp.status_code == 200:
+            return True
+        return False
+    except Exception:
+        # Catch all errors (connection, SSL, HTTP errors, etc.)
+        return False
 
-# -------------------------
-# GENERIC base URL builder
-# -------------------------
+
+# url builder
 def build_url(namespace, version, endpoint, params=None):
     base = f"https://{PRISM_CENTRAL_IP}:9440/api/{namespace}/{version}/{endpoint}"
     if params:
         return f"{base}?{urlencode(params)}"
     return base
 
-
-# -------------------------
-# GENERIC API request
-# -------------------------
+# api request
 def api_request(method, namespace, version, endpoint,
                 payload=None, params=None, headers=None):
     headers = headers or DEFAULT_HEADERS.copy()
@@ -54,10 +71,7 @@ def api_request(method, namespace, version, endpoint,
     response.raise_for_status()
     return response
 
-
-# -------------------------
-# GENERIC GET entity
-# -------------------------
+# get entities
 def get_entity(namespace, version, endpoint, filter=None, select=None, single=False):
     """
     Fetch entities from Nutanix API.
@@ -91,10 +105,7 @@ def get_entity(namespace, version, endpoint, filter=None, select=None, single=Fa
             result.append(projected)
         return result
 
-
-# -------------------------
-# GENERIC get extId based on name
-# -------------------------
+# get extId of an entity
 def get_entity_extId(namespace, version, endpoint, name,
                      key_field="key"):
     filter_exp = f"{key_field} eq '{name}'"
@@ -104,10 +115,7 @@ def get_entity_extId(namespace, version, endpoint, name,
         raise Exception(f"No entity found matching: {name}")
     return items[0]["extId"]
 
-
-# -------------------------
-# GENERIC get ETag
-# -------------------------
+# get ETag of an entity
 def get_entity_etag(namespace, version, endpoint):
     resp = api_request("GET", namespace, version, endpoint)
     etag = resp.headers.get("ETag")
@@ -115,10 +123,7 @@ def get_entity_etag(namespace, version, endpoint):
         raise Exception(f"ETag missing for endpoint: {endpoint}")
     return etag
 
-
-# -------------------------
-# GENERIC POST entity
-# -------------------------
+# post entity with optional ETag
 def post_entity(namespace, version, endpoint, payload=None, add_etag=False):
     headers = DEFAULT_HEADERS.copy()
     headers["NTNX-Request-Id"] = str(uuid.uuid4())

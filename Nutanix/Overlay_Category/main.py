@@ -1,6 +1,7 @@
 import logging
 from Nutanix.generics import (
     ask,
+    check_authentication,
     get_entity,
     get_entity_extId,
     post_entity
@@ -24,9 +25,13 @@ if not logger.handlers:
 # Input parameters
 PRISM_CENTRAL_IP = ask("Enter Prism Central IP", DEFAULT_PC_IP)
 USERNAME = ask("Enter Prism Central Username", DEFAULT_USERNAME)
-PASSWORD = ask("Enter Prism Central Password", DEFAULT_PASSWORD)
-CATEGORY_NAME = ask("Enter Category Name to Assign")
+PASSWORD = ask("Enter Prism Central Password", DEFAULT_PASSWORD, secret=True)
 
+if not check_authentication():
+    logger.error("Failed to authenticate with Prism Central. Please check your credentials.")
+    exit(1)
+
+CATEGORY_NAME = ask("Enter Category Name to Assign")
 
 def main():
     try:
