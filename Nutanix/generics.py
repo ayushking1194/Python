@@ -1,6 +1,6 @@
-// Author: Ayush Srivastava
-// Created: 2025-26-11
-// Repository: https://github.com/ayushking1194/Python
+# Author: Ayush Srivastava
+# Created: 2025-26-11
+# Repository: https://github.com/ayushking1194/Python
 
 import getpass
 import requests
