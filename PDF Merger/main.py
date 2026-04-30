@@ -1,3 +1,7 @@
+# Author :- Ayush Srivastava
+# Github :- https://github.com/ayushking1194
+# Created: 2026-01-26
+
 import os
 from PyPDF2 import PdfMerger
 
